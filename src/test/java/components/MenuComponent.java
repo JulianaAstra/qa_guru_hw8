@@ -2,8 +2,7 @@ package components;
 
 import com.codeborne.selenide.SelenideElement;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class MenuComponent {
@@ -13,15 +12,16 @@ public class MenuComponent {
 
     public MenuComponent chooseOption(String option) {
         menu
-            .shouldBe(visible)
+            .shouldBe(visible, interactable)
             .$$(".menu-burger__main-list li")
             .find(text(option))
             .hover();
+        dropList.shouldBe(visible, interactable);
         return this;
     }
 
     public void chooseSecondOption(String option) {
-        dropList.shouldBe(visible)
+        dropList.shouldBe(visible, interactable)
             .$$(".menu-burger__set li")
             .find(text(option))
             .click();
