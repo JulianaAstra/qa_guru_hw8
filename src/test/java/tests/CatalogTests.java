@@ -34,7 +34,7 @@ public class CatalogTests extends TestBase{
     })
     @ParameterizedTest
     @DisplayName("Фильтр по цене от {price} отображается на странице каталога {optionName}")
-    void sideMenuTest(String optionName, int price) {
+    void filterByPriceFromDisplaysOnPage(String optionName, int price) {
         mainPage
                 .openSideMenu();
 
@@ -54,7 +54,7 @@ public class CatalogTests extends TestBase{
     })
     @ParameterizedTest
     @DisplayName("Элемент навигационной панели [{arguments}] отображается на главной без авторизации")
-    void navMenuElementsUnauthoredTest(String option) {
+    void navMenuElementDisplayUnauthoredTest(String option) {
         mainPage
                 .checkNavigationPanel(option);
     }
