@@ -1,9 +1,10 @@
 package pages;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import static com.codeborne.selenide.Condition.clickable;
-import static com.codeborne.selenide.Condition.visible;
+import org.openqa.selenium.Keys;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage {
@@ -14,8 +15,11 @@ public class MainPage {
     SelenideElement navigationPanel = $("#basketContent");
     SelenideElement header = $(".header__container");
     SelenideElement currency = $(".header__container .header__currency");
-    SelenideElement currencyMenuHeader = $(".popup__header");
-    SelenideElement currencyDropdown = $(".country__wrap");
+    SelenideElement currencyDropdown = $(".country__item");
+
+    SelenideElement filtersBlock = $(".filters-block__desktop");
+    ElementsCollection filterByPriceBtns = $$(".dropdown-filter__btn--priceU");
+    ElementsCollection filterDropdowns = $$(".dropdown-filter__content");
 
     public MainPage openPage() {
         open(baseUrl);
@@ -26,8 +30,8 @@ public class MainPage {
 
     public MainPage openSideMenu() {
         menuBtn
-            .shouldBe(clickable)
-            .click();
+                .shouldBe(clickable)
+                .click();
 
         menuMain.shouldBe(visible);
         return this;
@@ -46,13 +50,13 @@ public class MainPage {
     public MainPage chooseCurency(String option) {
         header.shouldBe(visible);
         currency
-            .shouldBe(visible, interactable)
-            .hover();
+                .shouldBe(visible, interactable)
+                .hover();
 
         currencyDropdown
-            .$$(".radio-with-text__name")
-            .find(text(option))
-            .click();
+                .$$("label")
+                .find(text(option))
+                .click();
 
         currencyDropdown.shouldNotBe(visible);
         return this;
@@ -73,5 +77,41 @@ public class MainPage {
             $(".j-close popup__close close").click();
         }
         $(".popup").shouldNotBe(visible);
+    }
+
+    public MainPage setPriceStartsFrom(int price) {
+        filtersBlock.shouldBe(visible);
+        filterByPriceBtns.get(1).hover();
+
+        SelenideElement priceInput = filterDropdowns
+                .get(1)
+                .shouldBe(visible)
+                .$(".filter__price")
+                .$$(".j-range")
+                .get(0);
+
+        SelenideElement submitBtn = filterDropdowns
+                .get(1)
+                .$(".filter")
+                .$(".filter-btn");
+
+        priceInput.doubleClick();
+        priceInput.sendKeys(Keys.BACK_SPACE);
+        priceInput.setValue(String.valueOf(price));
+
+        submitBtn.click();
+
+        return this;
+    }
+
+    public MainPage checkStartPrice (int price) {
+        String formattedPrice = String.format("%,d", price).replace(",", " ");
+        filtersBlock
+                .shouldBe(visible);
+        filterByPriceBtns.get(1)
+                .$(".dropdown-filter__btn-name")
+                .shouldHave(text("от " + formattedPrice));
+
+        return this;
     }
 }
