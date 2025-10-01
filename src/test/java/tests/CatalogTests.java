@@ -1,6 +1,5 @@
 package tests;
 
-import components.MenuComponent;
 import data.Currency;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,19 +8,8 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.MainPage;
 
-import static java.lang.Thread.sleep;
-
 public class CatalogTests extends TestBase{
-    MainPage mainPage;
-    MenuComponent menuComponent;
-
-    @BeforeEach
-    void setupData() {
-        mainPage = new MainPage();
-        menuComponent = new MenuComponent();
-
-        mainPage.openPage();
-    }
+    MainPage mainPage = new MainPage();
 
     @CsvSource(value = {
             "Анатомические модели, 1000",
@@ -36,13 +24,8 @@ public class CatalogTests extends TestBase{
     @DisplayName("Фильтр по цене от {price} отображается на странице каталога {optionName}")
     void filterByPriceFromDisplaysOnPage(String optionName, int price) {
         mainPage
-                .openSideMenu();
-
-        menuComponent
-                .chooseOption("Канцтовары")
-                .chooseSecondOption(optionName);
-
-        mainPage
+                .openSideMenu()
+                .openPageFromCatalog("Канцтовары", optionName)
                 .setPriceStartsFrom(price)
                 .checkStartPrice(price);
     }

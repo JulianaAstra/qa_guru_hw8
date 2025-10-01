@@ -4,6 +4,8 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
+import pages.components.MenuComponent;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -20,6 +22,8 @@ public class MainPage {
     SelenideElement filtersBlock = $(".filters-block__desktop");
     ElementsCollection filterByPriceBtns = $$(".dropdown-filter__btn--priceU");
     ElementsCollection filterDropdowns = $$(".dropdown-filter__content");
+
+    MenuComponent menuComponent = new MenuComponent();
 
     public MainPage openPage() {
         open(baseUrl);
@@ -112,6 +116,13 @@ public class MainPage {
                 .$(".dropdown-filter__btn-name")
                 .shouldHave(text("от " + formattedPrice));
 
+        return this;
+    }
+
+    public MainPage openPageFromCatalog(String section, String subsection) {
+        menuComponent
+                .chooseOption(section)
+                .chooseSecondOption(subsection);
         return this;
     }
 }
