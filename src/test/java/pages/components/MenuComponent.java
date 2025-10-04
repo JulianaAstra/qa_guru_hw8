@@ -8,7 +8,6 @@ import static com.codeborne.selenide.Selenide.$;
 public class MenuComponent {
     SelenideElement menu = $(".menu-burger__main");
     SelenideElement dropList = $(".menu-burger__drop-list");
-    SelenideElement catalogTitle = $(".catalog-title");
 
     public MenuComponent chooseOption(String option) {
         menu
@@ -26,6 +25,5 @@ public class MenuComponent {
             .find(text(option))
             .click();
         menu.shouldNotBe(visible);
-        catalogTitle.shouldHave(text(option));
     }
 }

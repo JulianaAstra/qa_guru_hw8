@@ -7,9 +7,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.MainPage;
+import pages.components.CatalogPageComponent;
 
 public class CatalogTests extends TestBase{
     MainPage mainPage = new MainPage();
+    CatalogPageComponent catalogPage = new CatalogPageComponent();
 
     @CsvSource(value = {
             "Анатомические модели, 1000",
@@ -25,9 +27,12 @@ public class CatalogTests extends TestBase{
     void filterByPriceFromDisplaysOnPage(String optionName, int price) {
         mainPage
                 .openSideMenu()
-                .openPageFromCatalog("Канцтовары", optionName)
-                .setPriceStartsFrom(price)
-                .checkStartPrice(price);
+                .openPageFromCatalog("Канцтовары", optionName);
+        catalogPage
+                .openPriceDropdown()
+                .setFromPriceToInput(price)
+                .submitPriceFilter()
+                .checkFromPrice(price);
     }
 
     @ValueSource(strings = {
