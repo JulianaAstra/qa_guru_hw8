@@ -22,8 +22,8 @@ public class CatalogTests extends TestBase{
             "Торговые принадлежности, 5300",
             "Чертежные принадлежности, 10000"
     })
-    @ParameterizedTest
-    @DisplayName("Фильтр по цене от {price} отображается на странице каталога {optionName}")
+    @ParameterizedTest(name = "Фильтр по цене от {1} отображается на странице каталога {0}")
+    @DisplayName("Фильтр по цене 'от' отображается на странице каталога")
     void filterByPriceFromDisplaysOnPage(String optionName, int price) {
         mainPage
                 .openSideMenu()
@@ -40,16 +40,16 @@ public class CatalogTests extends TestBase{
             "Войти",
             "Корзина"
     })
-    @ParameterizedTest
-    @DisplayName("Элемент навигационной панели [{arguments}] отображается на главной без авторизации")
+    @ParameterizedTest(name = "Элемент навигационной панели {0} отображается на главной без авторизации")
+    @DisplayName("Элемент навигационной панели отображается на главной без авторизации")
     void navMenuElementDisplayUnauthoredTest(String option) {
         mainPage
                 .checkNavigationPanel(option);
     }
 
     @EnumSource(Currency.class)
-    @ParameterizedTest
-    @DisplayName("Выбранная валюта [{arguments}] отображается в хедере на главной")
+    @ParameterizedTest(name = "Выбранная валюта {0} отображается в хедере на главной")
+    @DisplayName("Выбранная валюта отображается в хедере на главной")
     void currencyDisplayInHeaderTest(Currency currency) {
         mainPage
                 .chooseCurency(currency.description)
