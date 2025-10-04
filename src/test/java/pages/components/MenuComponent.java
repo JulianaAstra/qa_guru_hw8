@@ -4,8 +4,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class MenuComponent {
     SelenideElement menu = $(".menu-burger__main");
@@ -16,10 +15,12 @@ public class MenuComponent {
     public MenuComponent chooseOption(String option) {
         menu
             .shouldBe(visible, interactable);
+
         menuOptions
             .find(text(option))
             .hover();
         dropList.shouldBe(visible, interactable);
+
         return this;
     }
 

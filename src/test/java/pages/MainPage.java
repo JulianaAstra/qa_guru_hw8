@@ -22,12 +22,14 @@ public class MainPage {
     ElementsCollection currencies = $$(".country__item label");
     SelenideElement waitMessage = $("#wait_msg");
     ElementsCollection productCards = $$(".product-card");
+    SelenideElement loader = $(".general-preloader");
 
     MenuComponent menuComponent = new MenuComponent();
 
     public MainPage openPage() {
         open("");
-        waitMessage.shouldNotBe(visible, Duration.ofSeconds(8));
+        waitMessage.shouldNotBe(visible, Duration.ofSeconds(10));
+        loader.shouldNotBe(visible, Duration.ofSeconds(8));
         productCards.shouldBe(sizeGreaterThan(0));
         return this;
     }
