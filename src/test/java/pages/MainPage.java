@@ -2,7 +2,6 @@ package pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import pages.components.CatalogPageComponent;
 import pages.components.MenuComponent;
 import java.time.Duration;
 
