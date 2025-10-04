@@ -14,20 +14,17 @@ public class CatalogTests extends TestBase{
     CatalogPageComponent catalogPage = new CatalogPageComponent();
 
     @CsvSource(value = {
-            "Анатомические модели, 1000",
-            "Карты и глобусы, 2000",
-            "Офисные принадлежности, 500",
-            "Письменные принадлежности, 300",
-            "Счетный материал, 1500",
-            "Торговые принадлежности, 5300",
-            "Чертежные принадлежности, 10000"
+            "Для новорожденных, 2000",
+            "Спецобувь, 500",
+            "Ортопедическая обувь, 1300"
     })
     @ParameterizedTest(name = "Фильтр по цене от {1} отображается на странице каталога {0}")
     @DisplayName("Фильтр по цене 'от' отображается на странице каталога")
     void filterByPriceFromDisplaysOnPage(String optionName, int price) {
         mainPage
-                .openSideMenu()
-                .openPageFromCatalog("Канцтовары", optionName);
+                .openSideMenu();
+        mainPage
+                .openPageFromCatalog("Обувь", optionName);
         catalogPage
                 .openPriceDropdown()
                 .setFromPriceToInput(price)

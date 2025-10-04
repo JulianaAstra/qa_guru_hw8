@@ -19,5 +19,4 @@ public class TestBase {
     void openMainPage() {
         mainPage.openPage();
     }
-
 }

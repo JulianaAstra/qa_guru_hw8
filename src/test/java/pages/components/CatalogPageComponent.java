@@ -14,6 +14,13 @@ public class CatalogPageComponent {
     ElementsCollection priceInputs = $$(".dropdown-filter:not(.measurementContainer--GRwov > .dropdown-filter) .j-range");
     SelenideElement submitPriceBtn = $(".dropdown-filter:not(.measurementContainer--GRwov > .dropdown-filter) .filter .filter-btn");
 
+    public CatalogPageComponent openPriceDropdown() {
+        filtersBlock.shouldBe(visible);
+        filterByPriceBtn.hover();
+
+        return this;
+    }
+
     public CatalogPageComponent setFromPriceToInput(int price) {
         filterDropdown.shouldBe(visible);
         priceInputs
@@ -34,19 +41,10 @@ public class CatalogPageComponent {
         return this;
     }
 
-    public CatalogPageComponent openPriceDropdown() {
-        filtersBlock.shouldBe(visible);
-        filterByPriceBtn.hover();
-
-        return this;
-    }
-
-    public CatalogPageComponent checkFromPrice (int price) {
+    public void checkFromPrice (int price) {
         String formattedPrice = String.format("%,d", price).replace(",", " ");
         filtersBlock.shouldBe(visible);
         filterByPriceBtn
                 .shouldHave(text("от " + formattedPrice));
-
-        return this;
     }
 }

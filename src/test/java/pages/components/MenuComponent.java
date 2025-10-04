@@ -2,6 +2,7 @@ package pages.components;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import pages.MainPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -11,11 +12,23 @@ public class MenuComponent {
     SelenideElement dropList = $(".menu-burger__first");
     ElementsCollection menuOptions = $$(".menu-burger__main-list li");
     ElementsCollection dropListOptions = $$(".menu-burger__set li");
+    SelenideElement menuBtn = $(".nav-element__burger");
 
-    public MenuComponent chooseOption(String option) {
+    public MenuComponent openMenu() {
+        menuBtn
+                .shouldBe(interactable)
+                .shouldBe(visible)
+                .hover()
+                .shouldBe(clickable)
+                .click();
+
+        menu.shouldBe(visible);
+        return this;
+    }
+
+    public MenuComponent openSubMenu(String option) {
         menu
             .shouldBe(visible, interactable);
-
         menuOptions
             .find(text(option))
             .hover();
@@ -24,7 +37,7 @@ public class MenuComponent {
         return this;
     }
 
-    public void chooseSecondOption(String option) {
+    public void chooseOptionInSubmenu(String option) {
         dropList.shouldBe(visible, interactable);
         dropListOptions
             .find(text(option))

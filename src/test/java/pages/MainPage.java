@@ -12,8 +12,6 @@ import static com.codeborne.selenide.Selenide.*;
 
 
 public class MainPage {
-    SelenideElement menuBtn = $(".nav-element__burger");
-    SelenideElement menuMain =  $(".menu-burger__main");
     SelenideElement navigationPanel = $("#basketContent");
     ElementsCollection navigationItems = $("#basketContent").$$(".navbar-pc__item ");
     SelenideElement header = $("#header");
@@ -34,26 +32,12 @@ public class MainPage {
         return this;
     }
 
-    public MainPage openSideMenu() {
-        menuBtn
-                .shouldBe(interactable)
-                .shouldBe(visible)
-                .hover()
-                .shouldBe(clickable)
-                .click();
-
-        menuMain.shouldBe(visible);
-        return this;
-    }
-
-    public MainPage checkNavigationPanel(String option) {
+    public void checkNavigationPanel(String option) {
         navigationPanel
                 .shouldBe(visible);
         navigationItems
                 .find(text(option))
                 .shouldBe(clickable);
-
-        return this;
     }
 
     public MainPage chooseCurency(String option) {
@@ -70,18 +54,19 @@ public class MainPage {
         return this;
     }
 
-    public MainPage checkCurrencyDisplay(String option) {
+    public void checkCurrencyDisplay(String option) {
         header.shouldBe(visible);
         currency.shouldHave(exactText(option));
-
-        return this;
     }
 
-    public CatalogPageComponent openPageFromCatalog(String section, String subsection) {
+    public void openSideMenu() {
         menuComponent
-                .chooseOption(section)
-                .chooseSecondOption(subsection);
+                .openMenu();
+    }
 
-        return new CatalogPageComponent();
+    public void openPageFromCatalog(String section, String subsection) {
+        menuComponent
+                .openSubMenu(section)
+                .chooseOptionInSubmenu(subsection);
     }
 }
