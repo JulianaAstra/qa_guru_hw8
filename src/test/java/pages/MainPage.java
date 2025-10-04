@@ -4,14 +4,16 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CatalogPageComponent;
 import pages.components.MenuComponent;
+import java.time.Duration;
 
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+
 
 public class MainPage {
     SelenideElement menuBtn = $(".nav-element__burger");
     SelenideElement menuMain =  $(".menu-burger__main");
-    SelenideElement mainPage = $("#mainContainer");
     SelenideElement navigationPanel = $("#basketContent");
     ElementsCollection navigationItems = $("#basketContent").$$(".navbar-pc__item ");
     SelenideElement header = $("#header");
@@ -19,19 +21,21 @@ public class MainPage {
     SelenideElement currencyDropdown = $(".country__item");
     ElementsCollection currencies = $$(".country__item label");
     SelenideElement waitMessage = $("#wait_msg");
-    MenuComponent menuComponent = new MenuComponent();
+    ElementsCollection productCards = $$(".product-card");
 
-    CatalogPageComponent catalogPage = new CatalogPageComponent();
+    MenuComponent menuComponent = new MenuComponent();
 
     public MainPage openPage() {
         open("");
-        waitMessage.shouldNotBe(visible);
-        mainPage.shouldBe(visible);
+        waitMessage.shouldNotBe(visible, Duration.ofSeconds(8));
+        productCards.shouldBe(sizeGreaterThan(0));
         return this;
     }
 
     public MainPage openSideMenu() {
         menuBtn
+                .shouldBe(interactable)
+                .shouldBe(visible)
                 .hover()
                 .shouldBe(clickable)
                 .click();
